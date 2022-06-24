@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ApipointsService} from '../Services/apipoints.service';
 import {clients} from '../../../shared/model/client.model'
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-client',
@@ -23,7 +24,9 @@ export class ClientComponent implements OnInit {
   
   //public clients!: any<object>;  
 
-  constructor(private api:ApipointsService,public router: Router) { }
+  constructor(private api:ApipointsService,
+              public router: Router,
+              private toast: ToastrService) { }
  
   ngOnInit(): void {
       this.getListOfClients();
@@ -71,8 +74,21 @@ export class ClientComponent implements OnInit {
 
   onEdit(client: any) {
     
-    this.router.navigate(['superadmin/editclient'], { state:client});
+    this.router.navigate(['superadmin/editclient',client.id]);
       
+  }
+
+  onDelete(id:number){
+    console.log(id);
+    this.api.deleteClient(id)
+    .subscribe({
+      next:(res)=>{
+       this.toast.success("deleted successfully")
+      },
+      error:(err)=>{
+        this.toast.success("unable to delete ")
+      }
+    })
   }
 
 }

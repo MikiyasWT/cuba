@@ -36,8 +36,8 @@
                
               
               <td style="white-space: nowrap;width:0.5px;text-align:center" [hidden]="hide">
-                <a  ngbTooltip = "edit" (click)="onEdit(row)" > <i class="fa fa-edit"  style="color:#7366ff;padding-right:20px" ></i></a>
-                <a ngbTooltip = "delete"><i class="fa fa-times"style="color:#7366ff;  padding-left:20px" (click)="onDelete(client)" style="color:#fd0a0a;"></i></a>
+                <a  ngbTooltip = "edit" (click)="onEdit(client)" > <i class="fa fa-edit"  style="color:#7366ff;padding-right:20px" ></i></a>
+                <a ngbTooltip = "delete"><i class="fa fa-times"style="color:#7366ff;  padding-left:20px" (click)="onDelete(client.id)" style="color:#fd0a0a;"></i></a>
                     
               </td>
 

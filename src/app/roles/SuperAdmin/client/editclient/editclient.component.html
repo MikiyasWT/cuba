@@ -2,14 +2,15 @@
     <div class="card">
       <div class="card-header" style="margin-top: 0px;margin-bottom:0px;padding-top: 5px;padding-bottom: 5px;">
         <h5>Edit Client's Information</h5>
+        
       </div>
       <div class="card-body">
-        <form [formGroup]="editClientform"  (ngSubmit)="editClient()" class="theme-form">
+        <form [formGroup]="editClientform" (ngSubmit)="editClient()" class="theme-form">
 
         <div class="form-group row">
             <label class="col-sm-3 col-form-label">Client name</label>
             <div class="col-sm-9">
-              <input class="form-control" formControlName="name" type="text" placeholder="Client name" required="">
+              <input class="form-control" formControlName="name" type="text" placeholder="Client name" required="" >
             </div>
         </div>
 

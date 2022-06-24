@@ -27,7 +27,7 @@ const routes: Routes = [
          
       }, 
       {
-        path:'editclient', 
+        path:'editclient/:id', 
         component:EditclientComponent
       },
 
