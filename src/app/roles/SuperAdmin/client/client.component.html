@@ -1,0 +1,51 @@
+<div>
+  
+  <a class="btn btn-success" style="margin-left:12px;margin-top: 10px;margin-bottom: 10px;"  href="superadmin/addclient" data-toggle="tooltip" 
+  role="button">Add Client</a>
+</div>
+<div class="col-sm-12">
+    <div class="card">
+      
+      <div class="table-responsive">
+        <table class="table table-de">
+          <thead class="bg-primary">
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Name</th>
+              <th scope="col">Phone</th>
+              <th scope="col">created @</th>
+              <th scope="col">Email</th>
+              <th scope="col">Address</th>
+              <th scope="col">role</th>
+              <th scope="col">Status</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+           
+            <tr *ngFor='let client of data '>
+              
+              <td >{{ client.id }}</td>
+              <td >{{ client.name }}</td>
+              <td >{{ client.contact_number }}</td>
+              <td >{{ client.created }}</td>
+              <td >{{ client.email }}</td>
+              <td >{{ client.address }}</td>
+              <td >{{ client.role }}</td>
+              <td >{{ client.status }}</td>
+               
+              
+              <td style="white-space: nowrap;width:0.5px;text-align:center" [hidden]="hide">
+                <a  ngbTooltip = "edit" (click)="onEdit(row)" > <i class="fa fa-edit"  style="color:#7366ff;padding-right:20px" ></i></a>
+                <a ngbTooltip = "delete"><i class="fa fa-times"style="color:#7366ff;  padding-left:20px" (click)="onDelete(client)" style="color:#fd0a0a;"></i></a>
+                    
+              </td>
+
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+

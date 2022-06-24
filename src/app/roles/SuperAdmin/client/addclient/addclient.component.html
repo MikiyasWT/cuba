@@ -1,0 +1,78 @@
+<div class="col-sm-12">
+    <div class="card">
+      <div class="card-header" style="margin-top: 0px;margin-bottom:0px;padding-top: 5px;padding-bottom: 5px;">
+        <h5>Add a Client</h5>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="addClientform"  (ngSubmit)="addClient()" class="theme-form">
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Client name</label>
+            <div class="col-sm-9">
+              <input class="form-control" formControlName="name" type="text" placeholder="Client name" required="">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Email</label>
+            <div class="col-sm-9">
+              <input class="form-control" formControlName="email" type="email" placeholder="Email">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Address</label>
+            <div class="col-sm-9">
+              <input class="form-control" formControlName="address" type="text" placeholder="Address" required="" >
+            </div>
+        </div>
+        
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="inputPassword3">Contact Number</label>
+            <div class="col-sm-9">
+              <input class="form-control" formControlName="contact_number" type="number" placeholder="Contact">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="inputPassword3">Password</label>
+            <div class="col-sm-9">
+              <input class="form-control" formControlName="password" type="password" placeholder="Password">
+            </div>
+        </div>
+          
+
+      <fieldset class="form-group">
+            <div class="row">
+              <label class="col-form-label col-sm-3 pt-0">status</label>
+              <div class="col-sm-9">
+                
+                
+
+                <div class="radio radio-primary mr-3 ml-2">
+                  <input id="radio15" type="radio" name="status" value="1" formControlName="status">
+                  <label for="radio15">Active</label>
+
+                  <input id="radio16" type="radio" name="status" value="0" formControlName="status">
+                  <label for="radio16">Inactive</label>
+                </div>
+
+                <div class="radio radio-primary mr-3 ml-2">
+                  
+                </div>
+
+              </div>
+            </div>
+     </fieldset>
+
+
+
+    <div class="card-footer">
+        <button class="btn btn-primary mr-1" type="submit">Submit</button>
+        <button class="btn btn-secondary">Cancel</button>
+    </div>
+        </form>
+      </div>
+ 
+    </div>
+  </div>
