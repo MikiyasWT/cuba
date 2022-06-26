@@ -1,6 +1,6 @@
 <div>
   
-  <a class="btn btn-success" style="margin-left:12px;margin-top: 10px;margin-bottom: 10px;"  href="superadmin/addclient" data-toggle="tooltip" 
+  <a class="btn btn-success" style="margin-left:12px;margin-top: 10px;margin-bottom: 10px;"  (click)="onAddClient()" data-toggle="tooltip" 
   role="button">Add Client</a>
 </div>
 <div class="col-sm-12">
@@ -28,7 +28,7 @@
               <td >{{ client.id }}</td>
               <td >{{ client.name }}</td>
               <td >{{ client.contact_number }}</td>
-              <td >{{ client.created }}</td>
+              <td >{{ client.created.substr(0,10) }}</td>
               <td >{{ client.email }}</td>
               <td >{{ client.address }}</td>
               <td >{{ client.role }}</td>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ApipointsService } from '../../Services/apipoints.service';
@@ -29,19 +29,25 @@ export class EditclientComponent implements OnInit {
  
   ngOnInit(): void {
 
-    this.editClientform = this.formbuilder.group({
-      id:["",Validators.required],
-      name:["",Validators.required], 
-      contact_number:["",Validators.required,Validators.pattern("^[0-9]*$"),Validators.minLength(10), Validators.maxLength(10)],  
-      status:["",Validators.required],
-      address:["",Validators.required],
-      email:["",Validators.required,Validators.maxLength(50)], 
-    });
+    // this.editClientform = this.formbuilder.group({
+    //   id:["",Validators.required],
+    //   name:["",Validators.required], 
+    //   contact_number:["",Validators.pattern("^[0-9]*$"),Validators.minLength(10), Validators.maxLength(10),Validators.required],  
+    //   status:["",Validators.required],
+    //   address:["",Validators.required],
+    //   email:["",Validators.maxLength(50),Validators.required], 
+    // });
 
-
+    this.editClientform = new FormGroup({
+      id: new FormControl(),
+      name:new FormControl(),
+      contact_number:new FormControl(),
+      status:new FormControl(),
+      address:new FormControl(),
+      email:new FormControl()
+   });
 
     
-    // let client = this.router.getCurrentNavigation().extras.state.client;
  
     let datas=[]
 
@@ -88,20 +94,23 @@ export class EditclientComponent implements OnInit {
     this.editClientform.controls['email'].setValue(eemail);
     this.editClientform.controls['address'].setValue(eaddress);
     this.editClientform.controls['contact_number'].setValue(econtact_number);
-    if(econtact_number.value === "Inactive"){
-      this.editClientform.controls['status'].setValue("0");
-    }
     this.editClientform.controls['status'].setValue("1");
+    if(estatus === "Inactive"){
+      this.editClientform.controls['status'].setValue("0");
+    } 
+
+    
 
     this.editClientform.controls['id'].disable();
 
+    
     //this.initalValues = this.editClientform.value;
     },
     (err)=>{
         console.log(err)
     })
     
-           
+
   }
 
   
@@ -111,46 +120,61 @@ export class EditclientComponent implements OnInit {
     // if (this.initalValues === this.editClientform.value) {
     //          return false;
     //     }
-      
+    console.log("status inside editclient()");  
     console.log(this.editClientform.controls['status'].value);
+    
     
     //validating field are not empty
    
     let nameValidation =  this.editClientform.controls['name'].value.length > 2 || this.editClientform.controls['name'].value.length < 15; 
     console.log("name")
     console.log(nameValidation)
-    let contactNumberValidation = this.editClientform.controls['contact_number'].value.length > 0 && this.editClientform.controls['contact_number'].value.length <=10;
+
+    let phoneLength = this.editClientform.controls['contact_number'].value.toString().length;
+    let contactNumberValidation = false;
+    if(phoneLength == 10){
+      contactNumberValidation = true
+    }
     console.log("contact")
     console.log(contactNumberValidation);
-    let emailValidation = this.editClientform.controls['email'].value.length < 8 && this.editClientform.controls['email'].value.length > 50; 
+    console.log("length")
+    console.log(phoneLength)
+
+    let emailValidation = this.editClientform.controls['email'].value.length > 8 && this.editClientform.controls['email'].value.length < 50; 
     console.log("email")
     console.log(emailValidation)
-    let addressValidation = this.editClientform.controls['address'].value.length < 3 && this.editClientform.controls['address'].value.length > 50; 
+    let addressValidation = this.editClientform.controls['address'].value.length > 3 && this.editClientform.controls['address'].value.length < 50; 
     console.log("address")
     console.log(addressValidation)
+    
+    let s = this.editClientform.dirty;
+    console.log("this.editClientform.dirty")
+    console.log(s)
 
-    if(!this.editClientform.invalid){
+    if(this.editClientform.dirty){
+       if(nameValidation && contactNumberValidation && emailValidation && addressValidation){
+        console.log("this.editClientform.getRawValue()")
+        console.log(this.editClientform.getRawValue())
 
-      console.log("this.editClientform.getRawValue()")
-      console.log(this.editClientform.getRawValue())
-      
-      this.api.editClient(this.editClientform.getRawValue())
-      .subscribe({
-        next:(res)=>{
-          console.log(res)
-          this.editClientform.reset();
-          this.toast.success("Updated successfully")
-          this.router.navigate(['superadmin/client'])
-        },
-        error:(err)=>{
-          console.log(err)
-          this.toast.error("unable to update client")
-          console.log("failed to Update client")
-        }
-      })
+        
+        this.api.editClient(this.editClientform.getRawValue())
+        .subscribe({
+          next:(res)=>{
+            console.log(res)
+            this.editClientform.reset();
+            this.toast.success("Updated successfully")
+            this.router.navigate(['superadmin/client'])
+          },
+          error:(err)=>{
+            console.log(err)
+            this.toast.error("unable to update client")
+            console.log("failed to Update client")
+          }
+        })
+       }
     }
 
-    return;
+    this.ngOnInit();
   }
 
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import {AuthenticationService} from '../../shared/services/authentication.service';
 import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
@@ -13,17 +13,24 @@ export class LoginComponent implements OnInit {
 
   public show: boolean = false;
   public loginForm: FormGroup;
-  public errorMessage: any;
+  public invalidPhoneMessage: boolean = false;
+  public invalidPasswordMessage:boolean = false;
 
   constructor(public authService: AuthenticationService,
               private fb: FormBuilder, 
               private router: Router,
               private jwtHelper: JwtHelperService) {
      
-        this.loginForm = this.fb.group({
-        contact_number: ['', Validators.required],
-        password: ['', Validators.required]
-      });
+      //   this.loginForm = this.fb.group({
+      //   contact_number: ['', Validators.required],
+      //   password: ['', Validators.required]
+      // });
+
+      this.loginForm = new FormGroup({
+        contact_number: new FormControl(),
+        password:new FormControl(),
+        
+     });
   }
 
   ngOnInit() {
@@ -41,22 +48,29 @@ export class LoginComponent implements OnInit {
     this.authService.SignIn(this.loginForm.value)
     .subscribe({
       next:(res:any) => {
-            
-            const token = res.token;
-            //const token = localStorage.getItem('token');
-            const decodedToken = (this.jwtHelper.decodeToken(token || ''));
-            const role = decodedToken.data.role;
-            const phone = decodedToken.data.contact_number;
-            
-            if(token){
-              localStorage.setItem('token',token);
-              localStorage.setItem("user",decodedToken);
-              localStorage.setItem("role",role);
-              localStorage.setItem("contact_number",phone);
+            if(!res.token){
               this.loginForm.reset();
-              //this.router.navigate(['dashboard']);
+                 this.invalidPhoneMessage = true
+                 this.invalidPasswordMessage = true
+                 this.loginForm.reset("",{onlySelf:true})
+                 return
+            }
+            const token = res.token;
+            localStorage.setItem('token',token);
+            //const token = localStorage.getItem('token');
+            //const decodedToken = (this.jwtHelper.decodeToken(token || ''));
+            //const role = decodedToken.data.role;
+            //const phone = decodedToken.data.contact_number;
+            //const name = decodedToken.data.name;
+              // localStorage.setItem("user",decodedToken);
+              // localStorage.setItem("role",role);
+              // localStorage.setItem("contact_number",phone);
+              const decodedToken =  this.authService.decodeToken(this.authService.getAuthToken());
+              const role = decodedToken.data.role;
               
+              this.loginForm.reset();
               switch(role){
+               
                 case 'Super Admin': this.router.navigate(['superadmin/default']);
                                      break;
                 case 'Admin': this.router.navigate(['superadmin/default']);
@@ -68,16 +82,15 @@ export class LoginComponent implements OnInit {
                 case 'Security': this.router.navigate(['dashboard/default']);
                                      break;                                   
               }
-    
-            }
-            else {
-                 this.loginForm.reset();
-                  
-            }
+              
+            
+            
       },
       error:(err) =>{
         this.loginForm.reset();
-        
+        this.invalidPhoneMessage = false //on purpose
+        this.invalidPasswordMessage = true
+        this.loginForm.reset("",{onlySelf:true})
       }
     });
     

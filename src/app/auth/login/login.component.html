@@ -12,6 +12,7 @@
             <form class="theme-form" [formGroup]="loginForm">
               <h4>Sign in to account</h4>
               <p>Enter your Phone & password to login</p>
+              <p *ngIf="invalidPhoneMessage" class="text text-danger mt-1">incorrect Phone & Password</p>
               <div class="form-group">
                 <label class="col-form-label">Phone number</label>
                 <input class="form-control" type="tel" required="" placeholder="" formControlName="contact_number">
@@ -19,7 +20,7 @@
                       class="text text-danger mt-1">
                       Phone number is required
                   </div>
-                  <div *ngIf="loginForm.controls.contact_number.touched && loginForm.controls.contact_number.errors?.contact_number"
+                  <div *ngIf="invalidPhoneMessage"
                       class="text text-danger mt-1">
                       Invalid Phone number
                   </div>

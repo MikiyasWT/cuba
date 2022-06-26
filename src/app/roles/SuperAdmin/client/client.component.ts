@@ -91,6 +91,10 @@ export class ClientComponent implements OnInit {
     })
   }
 
+  onAddClient(){
+    this.router.navigate(['superadmin/addclient']);
+  }
+
 }
 
 
