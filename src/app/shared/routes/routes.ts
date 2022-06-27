@@ -141,5 +141,21 @@ export const content: Routes = [
     path: 'superadmin',
     loadChildren: () => import('../../roles/SuperAdmin/superadmin.module').then(m => m.SuperadminModule)
   },
+  {
+    path:'client',   
+    loadChildren:() => import('../../roles/Client/client.module').then(m => m.ClientModule)
+  },
+  {
+    path:'customer',
+    loadChildren:() => import('../../roles/Customer/customer.module').then(m => m.CustomerModule)
+  },
+  {
+    path:'secuirty',
+    loadChildren: () => import('../../roles/Security/security.module').then(m => m.SecurityModule)
+  },
+  {
+    path:'visitor',
+    loadChildren: () => import('../../roles/Visitor/visitor.module').then(m => m.VisitorModule)
+  }
   
 ];

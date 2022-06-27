@@ -3,6 +3,7 @@ import { Subject, BehaviorSubject, fromEvent } from 'rxjs';
 import { takeUntil, debounceTime } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
+import { AuthenticationService } from './authentication.service';
 
 // Menu
 export interface Menu {
@@ -50,7 +51,7 @@ export class NavService implements OnDestroy {
 	
     public readonly roleType:any = localStorage.getItem('role');
     
-	constructor(private router: Router) {
+	constructor(private router: Router,private auth:AuthenticationService) {
 		this.setScreenWidth(window.innerWidth);
 		fromEvent(window, 'resize').pipe(
 			debounceTime(1000),
@@ -85,7 +86,7 @@ export class NavService implements OnDestroy {
 		this.screenWidth.next(width);
 	}
 
-	MENUITEMS: Menu[] = [
+MENUITEMS: Menu[] = [
 		
 		{
 			title: 'Dashboards', icon: 'home', type: 'sub', active: true, children: [
@@ -98,13 +99,11 @@ export class NavService implements OnDestroy {
 		}
 		];
 
-	CLIENTMENUITEMS: Menu[] = [
-			{
-				headTitle1: 'Client', headTitle2: 'Dashboard & roles.',
-			},
+CLIENTMENUITEMS: Menu[] = [
+			
 			{
 				title: 'Dashboards', icon: 'home', type: 'sub', active: true, children: [
-					{ path: '/client/dasboard/default', title: 'summary', type: 'link' },
+					{ path: '/client/default', title: 'summary', type: 'link' },
 					{ path: '/client/customer', title: 'Customer', type: 'link' },
 					{ path: '/client/visitor', title: 'Visitor', type: 'link' },
 					{ path: '/client/security', title: 'Security', type: 'link' }
@@ -112,18 +111,39 @@ export class NavService implements OnDestroy {
 			}
 			];	
 
-	CUSTOMERMENUITEMS: Menu[] = [
-				{
-					headTitle1: 'Customer', headTitle2: 'Dashboard & roles.',
-				},
+CUSTOMERMENUITEMS: Menu[] = [
+				
 				{
 					title: 'Dashboards', icon: 'home', type: 'sub', active: true, children: [
-						{ path: '/customer/dasboard/default', title: 'summary', type: 'link' },
+						{ path: '/customer/default', title: 'summary', type: 'link' },
 						{ path: '/customer/visitor', title: 'Visitor', type: 'link' },
-						{ path: '/customer/security', title: 'Security', type: 'link' }
+
 					]
 				}
-				];			
+				];
+				
+SECURITYMENUITEMS: Menu[] = [
+					
+					{
+						title: 'Dashboards', icon: 'home', type: 'sub', active: true, children: [
+							{ path: '/secuirty/default', title: 'summary', type: 'link' },
+							{ path: '/secuirty/visitor', title: 'Visitor', type: 'link' },
+							
+						]
+					}
+					];	
+					
+	VISITORMENUITEMS: Menu[] = [
+					
+						{
+							title: 'Dashboards', icon: 'home', type: 'sub', active: true, children: [
+								{ path: '/visitor/default', title: 'summary', type: 'link' },
+								{ path: '/visitor/request', title: 'Request', type: 'link' },
+								
+							]
+						}
+						];								
+
 
 
 
@@ -142,7 +162,8 @@ export class NavService implements OnDestroy {
      
 	itemInitializer(){
 		let item=null;
-        switch(this.roleType){
+		let token = this.auth.decodeToken(this.auth.getAuthToken())
+        switch(token.data.role){
 			case 'Super Admin': return item = new BehaviorSubject<Menu[]>(this.MENUITEMS);
 								 break;
 			case 'Admin':  return item = new BehaviorSubject<Menu[]>(this.MENUITEMS);
@@ -150,7 +171,11 @@ export class NavService implements OnDestroy {
 			case 'Client': return item = new BehaviorSubject<Menu[]>(this.CLIENTMENUITEMS);
 								 break;                 
 			case 'Customer': return item = new BehaviorSubject<Menu[]>(this.CUSTOMERMENUITEMS);
-								 break;            
+								 break;
+			case 'Security': return item = new BehaviorSubject<Menu[]>(this.SECURITYMENUITEMS);
+			                     break;
+		    case 'Visitor': return item = new BehaviorSubject<Menu[]>(this.VISITORMENUITEMS);
+			                     break; 			             
 			
 		  }
 	  }

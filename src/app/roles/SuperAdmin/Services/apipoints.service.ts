@@ -27,7 +27,7 @@ export class ApipointsService {
 
   deleteClient(id:number){
     let url = baseurl+'del_client.php/?'+id;
-    return this.http.delete<any>(url);
+    return this.http.put(url,"");
   }
 
   editClient(data:FormData){
@@ -38,12 +38,60 @@ export class ApipointsService {
 
   //customer services
 
+  getCustomers(){
+   let url = baseurl+'get_customers.php';
+   return this.http.get<any>(url);
+  }
 
+  registerCustomer(data:FormData){
+    let url = baseurl+'reg_customer.php';
+    return this.http.post<any>(url,data)
+  }
+
+  editCustomer(data:FormData){
+    let url = baseurl+'edit_customer.php';
+    return this.http.put<any>(url,data);
+  }
+
+  deleteCustomer(id:number){
+    let url = baseurl+'del_customer.php/?'+id;
+    return this.http.put<any>(url,"")
+  }
 
   //visitor services
+  getVisitors(){
 
+  }
+
+  registerVisitor(){
+
+  }
+
+  editVisitor(){
+
+  }
+
+  deleteVisitor(){
+
+  }
 
   //security services
+
+  getSecurities(){
+
+  }
+
+  registerSecurity(){
+
+  }
+
+  editSecurity(){
+
+  }
+
+  deleteSecurity(){
+    
+  }
 }
 
 

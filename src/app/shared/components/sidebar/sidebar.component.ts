@@ -26,6 +26,7 @@ export class SidebarComponent {
     public layout: LayoutService) {
     this.navServices.items.subscribe(menuItems => {
       this.menuItems = menuItems;
+      console.log(this.menuItems)
       this.router.events.subscribe((event) => {
         if (event instanceof NavigationEnd) {
           menuItems.filter(items => {

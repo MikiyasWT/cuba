@@ -18,7 +18,7 @@ SignIn(data:FormData){
 }
 
 getAuthToken():string {
-    return localStorage.getItem('token')
+    return localStorage.getItem('user')
     }
 
 decodeToken(token:string):any {

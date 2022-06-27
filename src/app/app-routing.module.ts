@@ -8,11 +8,14 @@ import { content } from "./shared/routes/routes";
 
 import { AdminGuard } from './shared/guard/admin.guard';
 import {DefaultComponent} from './roles/SuperAdmin/default/default.component';
-
+import {DefaultComponent as ClientDefaultComponent} from './roles/Client/default/default.component'
+import {DefaultComponent as CustomerDefaultComponent } from './roles/Customer/default/default.component';
+import {DefaultComponent as SecuriityDefaultComponent} from './roles/Security/default/default.component'
+import {DefaultComponent as VisitorComponent} from './roles/Visitor/default/default.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard/default',
+    redirectTo: 'auth/login',
     pathMatch: 'full'
   },
   {
@@ -38,6 +41,31 @@ const routes: Routes = [
     canActivate:[AdminGuard],
     children:content
   },
+  {   
+    path:'client',
+    component:ClientDefaultComponent,
+    canActivate:[AdminGuard],
+    children:content
+  },
+  {
+    path:'customer',
+    component:CustomerDefaultComponent,
+    canActivate:[AdminGuard],
+    children:content
+  },
+  {
+    path:'security',
+    component:SecuriityDefaultComponent,
+    canActivate:[AdminGuard],
+    children:content
+  },
+  {
+    path:'visitor',
+    component:VisitorComponent,
+    canActivate:[AdminGuard],
+    children:content
+  },
+
   {
     path: '**',
     redirectTo: ''

@@ -32,6 +32,12 @@ import { LoginComponent } from './auth/login/login.component';
 import { AuthenticationService } from './shared/services/authentication.service';
 import { JwtHelperService, JwtModule} from '@auth0/angular-jwt';
 import {AuthInterceptorServiceInterceptor} from '../app/shared/services/auth-interceptor-service.interceptor';
+//import { DefaultComponent } from './roles/Client/default/default/default.component';
+import { CustomerComponent } from './roles/Client/customer/customer.component';
+import { SecurityComponent } from './roles/Client/security/security.component';
+import { VisitorsComponent } from './roles/Customer/visitors/visitors.component';
+import { DefaultComponent } from './roles/Visitor/default/default.component';
+import { RequestPermissionComponent } from './roles/Visitor/request-permission/request-permission.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -42,8 +48,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    
+    LoginComponent 
     
   ],
   imports: [

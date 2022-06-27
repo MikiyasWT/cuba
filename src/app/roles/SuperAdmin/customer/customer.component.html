@@ -1,1 +1,53 @@
-<p>customer works!</p>
+<div>
+  
+    <a class="btn btn-success" style="margin-left:12px;margin-top: 10px;margin-bottom: 10px;"  (click)="onAddCustomer()" data-toggle="tooltip" 
+    role="button">Add Customer</a>
+  </div>
+  <div class="col-sm-12">
+      <div class="card">
+        
+        <div class="table-responsive">
+          <table class="table table-de">
+            <thead class="bg-primary">
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Phone</th>
+                <th scope="col">created @</th>
+                <th scope="col">Email</th>
+                <th scope="col">Address</th>
+                <th scope="col">role</th>
+                <th scope="col">Status</th>
+                <th scope="col">Client Name</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+             
+              <tr *ngFor='let customer of data '>
+                
+                <td >{{ customer.id }}</td>
+                <td >{{ customer.name }}</td>
+                <td >{{ customer.contact_number }}</td>
+                <td >{{ customer.created.substr(0,10) }}</td>
+                <td >{{ customer.email }}</td>
+                <td >{{ customer.address }}</td>
+                <td >{{ customer.role }}</td>
+                <td >{{ customer.status }}</td>
+                <td >{{ customer.client_name}}</td>
+                
+                <td style="white-space: nowrap;width:0.5px;text-align:center" [hidden]="hide">
+                  <a  ngbTooltip = "edit" (click)="onEdit(customer)" > <i class="fa fa-edit"  style="color:#7366ff;padding-right:20px" ></i></a>
+                  <a ngbTooltip = "delete"><i class="fa fa-times"style="color:#7366ff;  padding-left:20px" (click)="onDelete(customer.id)" style="color:#fd0a0a;"></i></a>
+                      
+                </td>
+  
+              </tr>
+  
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  
+  

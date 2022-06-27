@@ -13,7 +13,7 @@ export class MyAccountComponent implements OnInit {
   //public readonly phone_number:string = localStorage.getItem('contact_number');
   //public readonly roleType:string = localStorage.getItem('role');
   public readonly phone_number:string = this.authService.decodeToken(this.authService.getAuthToken()).data.contact_number;     
-  public readonly roleType:string = this.authService.decodeToken(this.authService.getAuthToken()).data.roleType;
+  public readonly roleType:string = this.authService.decodeToken(this.authService.getAuthToken()).data.role;
   public readonly username:string = this.authService.decodeToken(this.authService.getAuthToken()).data.name;
   
   constructor(public authService: AuthenticationService,
