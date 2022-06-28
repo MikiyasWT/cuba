@@ -21,6 +21,7 @@ import { AddclientComponent } from './client/addclient/addclient.component';
 import { AddcustomerComponent } from './customer/addcustomer/addcustomer.component';
 import { EditcustomerComponent } from './customer/editcustomer/editcustomer.component';
 import { EditclientComponent } from './client/editclient/editclient.component';
+import { ClientFilterPipe } from './pipes/client-filter.pipe';
 
  
 
@@ -34,7 +35,8 @@ import { EditclientComponent } from './client/editclient/editclient.component';
     AddclientComponent,
     EditclientComponent,
     AddcustomerComponent,
-    EditcustomerComponent],
+    EditcustomerComponent,
+    ClientFilterPipe],
   imports: [
     CommonModule,
     ChartistModule,

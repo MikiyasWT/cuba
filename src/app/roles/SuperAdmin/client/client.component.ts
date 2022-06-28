@@ -3,6 +3,7 @@ import {ApipointsService} from '../Services/apipoints.service';
 import {clients} from '../../../shared/model/client.model'
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { NavService } from 'src/app/shared/services/nav.service';
 
 @Component({
   selector: 'app-client',
@@ -10,7 +11,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./client.component.scss']
 })
 export class ClientComponent implements OnInit {
-  data:any;
+  public data:any;
   cols = [
     { name: 'id', label: 'S.NO' },
     { name: 'name', label: 'Name' },
@@ -21,12 +22,14 @@ export class ClientComponent implements OnInit {
     { name: 'created', label: 'Created' },
     { name: 'status', label: 'Status' },
   ];
+  searchValue:string;
   
   //public clients!: any<object>;  
 
   constructor(private api:ApipointsService,
               public router: Router,
-              private toast: ToastrService) { }
+              private toast: ToastrService,
+              ) { }
  
   ngOnInit(): void {
       this.getListOfClients();
@@ -94,6 +97,8 @@ export class ClientComponent implements OnInit {
   onAddClient(){
     this.router.navigate(['superadmin/addclient']);
   }
+
+ 
 
 }
 
