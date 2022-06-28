@@ -12,11 +12,11 @@
             <form class="theme-form" [formGroup]="loginForm">
               <h4>Sign in to account</h4>
               <p>Enter your Phone & password to login</p>
-              <p *ngIf="invalidPhoneMessage" class="text text-danger mt-1">incorrect Phone & Password</p>
+              <p *ngIf="incorrectInput" class="text text-danger mt-1">incorrect Phone & Password</p>
               <div class="form-group">
                 <label class="col-form-label">Phone number</label>
-                <input class="form-control" type="tel" required="" placeholder="" formControlName="contact_number">
-                  <div *ngIf="loginForm.controls.contact_number.touched && loginForm.controls.contact_number.errors?.required"
+                <input class="form-control" minlength="10" maxlength="10" pattern="[0-9]{10}" type="tel" required placeholder="" formControlName="contact_number">
+                  <div *ngIf="loginForm.controls.contact_number.touched && loginForm.controls.contact_number.errors?.required "
                       class="text text-danger mt-1">
                       Phone number is required
                   </div>
@@ -27,7 +27,7 @@
               </div>
               <div class="form-group" id="password-div">
                 <label class="col-form-label">Password</label>
-                <input class="form-control" [type]="show ? 'text' : 'password'" formControlName="password" required="" placeholder="*********">
+                <input class="form-control" [type]="show ? 'text' : 'password'" formControlName="password" minlength="6" maxlength="30" required placeholder="*********">
                 <div class="show-hide" (click)="showPassword()" *ngIf="!show"><span class="show"></span></div>
                 <div class="show-hide" (click)="showPassword()" *ngIf="show"><span class="Hide"></span></div>
                 <div *ngIf="loginForm.controls.password.touched && loginForm.controls.password.errors?.required"
@@ -39,7 +39,7 @@
               <div class="form-group mb-0">
                 <button class="btn btn-primary btn-block"
                   
-                  (click)="login()"
+                  (click)="login($event)"
                   type="button"><span>Login</span>
                 </button>
               </div>
